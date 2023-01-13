@@ -1,0 +1,77 @@
+
+
+
+struct chr_data{
+    id: str,
+    id_type: str,
+    act: str,
+    nom: str,
+    utol: str,
+    ltol: str,
+    f_id: str,
+    group: str,
+    groups: str
+}
+
+struct fet_data{
+    seq: str,
+    id_type: str,
+    id: str,
+    sigma: str,
+    min_dev: str,
+    max_dev: str,
+    form: str,
+    actx: str,
+    acty: str,
+    actz: str,
+    acti: str,
+    actj: str,
+    actk: str,
+    nomx: str,
+    nomy: str,
+    nomz: str,
+    nomi: str,
+    nomj: str,
+    nomk: str,
+    act_diameter: str,
+    act_diameter2: str,
+    act_a1: str,
+    act_a2: str,
+    act_angle: str,
+    act_apex_dngle: str,
+    nom_diameter: str,
+    nom_diameter2: str,
+    nom_a1: str,
+    nom_a2: str,
+    nom_angle: str,
+    nom_apex_angle: str,
+    alignment: str,
+    io_sign: u32
+}
+
+struct header_data{
+    date: str,
+    time: str,
+    name: str,
+    part_id: str,
+    msn: str,
+    cav: str,
+    x_offset: str,
+    y_offset: str,
+    z_offset: str,
+    wo: str,
+    so: str,
+    comment: str,
+    start_run: i64,
+    end_run: i64,
+    operation: str,
+    tags: str,
+    status: str,
+    dmeid: str,
+    devicegroup: str,
+    dmesn: str,
+    controllertyp: str,
+    dmeswi: str,
+    dmeswv: str,
+    partnb: u32
+}

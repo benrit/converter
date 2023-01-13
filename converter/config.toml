@@ -1,0 +1,14 @@
+[machine]
+type="zeiss"
+dmesn="501717"
+dmeswv="6.8.2606"
+controllertyp="C32BIT"
+dmeswi="Calypso"
+dmeid="CONT_G2"
+
+[configuation]
+machine_result_file="c:/temp/results"
+cmm_result_file="c:/temp"
+xml_result_file="O:/Measurement/results"
+mongodb = {uri="hello"}
+
