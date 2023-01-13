@@ -13,11 +13,8 @@ use werth;
 
 use toml;
 
-fn main() {
 
-    let config_file = fs::read_to_string(r"config.toml").expect("error config.toml not found");
-    let mut config: Config = toml::from_str(config_file.as_str()).expect("error loading config.toml file");
-
+fn read_args(config: &mut Config){
     let args: Vec<String> = env::args().collect();
     let mut args_iter = args.iter();
 
@@ -27,7 +24,15 @@ fn main() {
             _ => {}
         }
     }
+}
 
+fn main() {
+
+    let config_file = fs::read_to_string(r"config.toml").expect("error config.toml not found");
+    let mut config: Config = toml::from_str(config_file.as_str()).expect("error loading config.toml file");
+
+    read_args(&mut config);
+    
     let dialog_path = Path::new(config.configuation.cmm_result_file.as_str())
         .join(config.part_id.as_ref().unwrap_or(&"".to_string()))
         .join("dialog.json");
@@ -63,7 +68,7 @@ fn main() {
     let _res = config.dialog_data.expect("dialog.json not specified").to_file(dialog_path.to_str().unwrap());
 
     println!("{}", json!(config.fet_data));
-    
+
 
 }
 
