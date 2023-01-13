@@ -7,7 +7,6 @@ use crate::drivers::elements;
 
 
 #[allow(nonstandard_style)]
-
 #[derive(Deserialize, Serialize, Debug, PartialEq, Clone)]
 pub struct Dialog {
     #[serde(default)]

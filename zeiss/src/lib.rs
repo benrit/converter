@@ -1,9 +1,7 @@
 
 use std::fs;
 use std::path::Path;
-
 use std::collections::HashMap;
-
 use shared::drivers::config::{Config};
 use shared::drivers::elements;
 
@@ -33,9 +31,7 @@ fn read_fet_file(filename: &Path) -> Option<Vec<elements::FetData>> {
         }
     
     }
-
     Some(fet_data)
-
 }
 
 
@@ -87,9 +83,6 @@ fn read_chr_file(filename: &Path) -> Option<Vec<elements::ChrItem>> {
 pub fn convert(config: &mut Config) {
 
     let files = fs::read_dir(config.configuation.machine_result_file.clone()).unwrap();
-
-    config.chr_data = Some(Vec::new());
-
 
     for file in files{
 
