@@ -107,19 +107,6 @@ pub enum FetElement {
     None
 }
 
-impl elements::Point {
-    fn from_str(_input: &str) -> elements::Point{
-        elements::Point{
-            id: String::from(""),
-            id_type: String::from(""),
-            nom_pos: elements::Position { x: 1.00, y: 1.0, z: 1.0 },
-            nom_vec: elements::Vector { i: 1.0, j: 0.0, k: 0.0 },
-            act_pos: elements::Position { x: 1.01, y: 1.0, z: 1.0 },
-            act_vec: elements::Vector { i: 1.0, j: 0.0, k: 0.0 },
-        }
-    }
-}
-
 impl FetElement{
     fn from_str(input: &str)-> FetElement{
         let id_type: &str = "Point";
@@ -139,7 +126,8 @@ pub struct Config{
     // pub actions: Option<Actions>,
     pub part_id: Option<String>,
     pub part_nb: Option<String>,
-    pub chr_data: Option<Vec<elements::ChrData>>,
+    pub chr_data: Option<Vec<elements::ChrItem>>,
+    pub fet_data: Option<Vec<elements::FetData>>,
     // pub fet_data: Option<Vec<FetElement>>
     pub dialog_data: Option<DialogJson>
 }

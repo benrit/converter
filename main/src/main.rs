@@ -4,6 +4,7 @@ use std::io;
 use std::env;
 use std::path::Path;
 
+use serde_json::json;
 use shared::drivers::config::DialogJson;
 use shared::drivers::config::Config;
 
@@ -42,9 +43,6 @@ fn main() {
         return
     }
 
-    println!("{}", toml::to_string(&config).unwrap());
-
-
     match config.machine.machine_type.to_ascii_lowercase().as_str() {
         "zeiss" => {zeiss::convert(&mut config)},
         "werth" => {werth::convert(&mut config)},
@@ -64,7 +62,8 @@ fn main() {
 
     let _res = config.dialog_data.expect("dialog.json not specified").to_file(dialog_path.to_str().unwrap());
 
-
+    println!("{}", json!(config.fet_data));
+    
 
 }
 
