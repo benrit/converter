@@ -41,7 +41,6 @@ fn main() {
         _=> {println!("invalid machine type")}
     }
 
-    // println!("{:?}", config.dialog_data);
     let current_counter = match config.dialog_data.as_ref() {
         Some(d) => {d.Dialog.counter.unwrap_or(0u32)},
         None => {0u32},
@@ -53,6 +52,8 @@ fn main() {
     };
 
     let _res = config.dialog_data.expect("dialog.json not specified").to_file(dialog_path.to_str().unwrap());
+
+
 
 }
 
