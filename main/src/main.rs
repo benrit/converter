@@ -1,4 +1,6 @@
 use std::fs;
+use std::io;
+
 use std::env;
 use std::path::Path;
 
@@ -26,12 +28,21 @@ fn main() {
     }
 
     let dialog_path = Path::new(config.configuation.cmm_result_file.as_str())
-        .join(config.part_id.as_ref().unwrap())
+        .join(config.part_id.as_ref().unwrap_or(&"".to_string()))
         .join("dialog.json");
+    
+    
+    if dialog_path.exists(){
+        config.dialog_data = DialogJson::from_file(dialog_path.to_str().unwrap());
+        if config.dialog_data.as_ref().unwrap().Dialog.operation == "Setup" {return}
+    }else {
+        println!("no dialog.json file {}", dialog_path.to_str().unwrap());
+        let mut buf = String::new();
+        let _res = io::stdin().read_line(&mut buf);
+        return
+    }
 
-
-    config.dialog_data = DialogJson::from_file(dialog_path.to_str().unwrap());
-    if config.dialog_data.as_ref().unwrap().Dialog.operation == "Setup" {return}
+    println!("{}", toml::to_string(&config).unwrap());
 
 
     match config.machine.machine_type.to_ascii_lowercase().as_str() {
