@@ -4,7 +4,7 @@ use std::io;
 use std::env;
 use std::path::Path;
 
-use serde_json::json;
+// use serde_json::json;
 use shared::drivers::config::DialogJson;
 use shared::drivers::config::Config;
 
@@ -27,6 +27,21 @@ fn read_args(config: &mut Config){
 }
 
 fn main() {
+    // config.toml file options:
+    // [machine]
+    // type="zeiss"                 # zeiss, werth
+    // dmesn="501717"               # machine serial number
+    // dmeswv="6.8.2606"            # software version
+    // controllertyp="C32BIT"       # controllertype for zeiss
+    // dmeswi="Calypso"             # software name
+    // dmeid="CONT_G2"              # machine type
+
+    // [configuation]
+    // machine_result_file=".\\test_data\\results"  
+    // cmm_result_file=".\\test_data"
+    // xml_result_file="O:\\Measurement\\results"
+    // database = { uri="hello", target="123" }
+
 
     let config_file = fs::read_to_string(r"config.toml").expect("error config.toml not found");
     let mut config: Config = toml::from_str(config_file.as_str()).expect("error loading config.toml file");
@@ -40,11 +55,22 @@ fn main() {
     
     if dialog_path.exists(){
         config.dialog_data = DialogJson::from_file(dialog_path.to_str().unwrap());
-        if config.dialog_data.as_ref().unwrap().Dialog.operation == "Setup" {return}
-    }else {
-        println!("no dialog.json file {}", dialog_path.to_str().unwrap());
+        
+        // if Setup is selected in the start Dialog we don't want an output.
+        // if Incomming Measurement is selected we want to import the scan data
+        match config.dialog_data.as_ref().unwrap().Dialog.operation.as_str() {
+            "Setup" => { return },                  
+            "Incomming Measurement" => {            
+                config.dialog_data.as_mut().unwrap().Setup.importScan = true;
+            } 
+            _ => {}
+        } 
+
+    } else {
+        println!("no dialog.json file {}\npress ENTER to continue", dialog_path.to_str().unwrap());
         let mut buf = String::new();
-        let _res = io::stdin().read_line(&mut buf);
+        let _res = io::stdin().read_line(&mut buf); // to be able to read the message, waiting here for operator to confirm with Enter
+        
         return
     }
 
@@ -65,10 +91,9 @@ fn main() {
         None => {},
     };
 
+    println!("{}", serde_json::to_string(&config).unwrap());
+
     let _res = config.dialog_data.expect("dialog.json not specified").to_file(dialog_path.to_str().unwrap());
-
-    println!("{}", json!(config.fet_data));
-
 
 }
 

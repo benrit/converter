@@ -3,7 +3,8 @@
 use serde::{Deserialize, Serialize};
 use toml::value::{Array};
 
-use crate::drivers::elements;
+
+use super::elements::HType;
 
 
 #[allow(nonstandard_style)]
@@ -81,7 +82,8 @@ pub struct Machine{
 }
 
 #[derive(Deserialize, Serialize, Debug, PartialEq, Clone)]
-pub struct Mongodb{
+pub struct Database{
+    target: String,
     uri: String
 }
 
@@ -90,7 +92,7 @@ pub struct Configuation{
     pub machine_result_file: String, //results from the machine
     pub cmm_result_file: String, // export to this file location
     pub xml_result_file: String, //legacy file format
-    pub mongodb: Option<Mongodb>
+    pub database: Option<Database>
 }
 
 #[derive(Deserialize, Debug, PartialEq, Clone)]
@@ -98,35 +100,21 @@ pub struct Actions{
     pub pipeline: Option<Array>
 }
 
-#[derive(Deserialize, Debug, PartialEq, Clone)]
-pub enum FetElement {
-    Point(elements::Point),
-    Line(elements::Line),
-    Plane(elements::Plane),
-    None
-}
-
-impl FetElement{
-    fn from_str(input: &str)-> FetElement{
-        let id_type: &str = "Point";
-        match id_type{
-            "Point" => FetElement::Point(elements::Point::from_str(input)),
-            _ => FetElement::None
-        }
-        
-    }
-}
-
 
 #[derive(Deserialize, Serialize, Debug, PartialEq, Clone)]
-pub struct Config{
+pub struct Config
+    {
+
     pub machine: Machine,
     pub configuation: Configuation,
     // pub actions: Option<Actions>,
     pub part_id: Option<String>,
     pub part_nb: Option<String>,
-    pub chr_data: Option<Vec<elements::ChrItem>>,
-    pub fet_data: Option<Vec<elements::FetData>>,
+    #[serde(default, alias="chrData")]
+    pub chr_data: Option<Vec<HType>>,
+    // #[serde(flatten)]
+    #[serde(default, alias="fetData")]
+    pub fet_data: Option<Vec<HType>>,
     // pub fet_data: Option<Vec<FetElement>>
     pub dialog_data: Option<DialogJson>
 }

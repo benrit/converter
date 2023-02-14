@@ -1,0 +1,3 @@
+planid	partnb	id	type	idsymbol	actual	nominal	uppertol	lowertol	deviation	exceed	warningLimitCF	featureid	featuresigma	comment	link	linkmode	mmc	useruppertol	userlowertol	fftphi	fftphiunit	zoneroundnessangle	groupname	groupname2	datumAid	datumBid	datumCid	natuppertolid	natlowertolid	decimalplaces	featurePosX	featurePosY	featurePosZ	unit	group1	group2	group3	group4	group5	group6	group7	group8	group9	group10	
+00469339-Gate	815	Gate_16MM_1.Seal_1_X	X1	xValue	1.0000000	0.0000000	0.0050000	-0.0050000	0.0000000		100.0000000	Gate_16MM_1.Seal_1	0.0000000					0.0050000	-0.0050000				Gate_16MM_1	Gate_16MM_1.Seal_Dia				1	1	3	-39.0000000	6.0000000	-10.1350000	mm	Gate_16MM_1	Gate_16MM_1.Seal_Dia
+END

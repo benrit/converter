@@ -10,5 +10,4 @@ dmeid="CONT_G2"
 machine_result_file=".\\test_data\\results"
 cmm_result_file=".\\test_data"
 xml_result_file="O:\\Measurement\\results"
-mongodb = {uri="hello"}
-
+database = { uri="hello", target="123"}
