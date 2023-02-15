@@ -89,9 +89,9 @@ pub struct Database{
 
 #[derive(Deserialize, Serialize, Debug, PartialEq, Clone)]
 pub struct Configuation{
-    pub machine_result_file: String, //results from the machine
-    pub cmm_result_file: String, // export to this file location
-    pub xml_result_file: String, //legacy file format
+    pub machine_result_path: String, //results from the machine
+    pub cmm_result_path: String, // export to this path location
+    pub xml_result_path: String, //legacy path format
     pub database: Option<Database>
 }
 
@@ -102,8 +102,7 @@ pub struct Actions{
 
 
 #[derive(Deserialize, Serialize, Debug, PartialEq, Clone)]
-pub struct Config
-    {
+pub struct Config{
 
     pub machine: Machine,
     pub configuation: Configuation,
@@ -112,7 +111,6 @@ pub struct Config
     pub part_nb: Option<String>,
     #[serde(default, alias="chrData")]
     pub chr_data: Option<Vec<HType>>,
-    // #[serde(flatten)]
     #[serde(default, alias="fetData")]
     pub fet_data: Option<Vec<HType>>,
     // pub fet_data: Option<Vec<FetElement>>

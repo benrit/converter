@@ -37,9 +37,9 @@ fn main() {
     // dmeid="CONT_G2"              # machine type
 
     // [configuation]
-    // machine_result_file=".\\test_data\\results"  
-    // cmm_result_file=".\\test_data"
-    // xml_result_file="O:\\Measurement\\results"
+    // machine_result_path=".\\test_data\\results"  
+    // cmm_result_path=".\\test_data"
+    // xml_result_path="O:\\Measurement\\results"
     // database = { uri="hello", target="123" }
 
 
@@ -48,7 +48,7 @@ fn main() {
 
     read_args(&mut config);
     
-    let dialog_path = Path::new(config.configuation.cmm_result_file.as_str())
+    let dialog_path = Path::new(config.configuation.cmm_result_path.as_str())
         .join(config.part_id.as_ref().unwrap_or(&"".to_string()))
         .join("dialog.json");
     

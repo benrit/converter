@@ -195,7 +195,7 @@ fn read_chr_file_v2(filename: &Path) -> Option<Vec<HType>>{
 
 pub fn convert(config: &mut Config) {
 
-    let files = fs::read_dir(config.configuation.machine_result_file.clone()).unwrap();
+    let files = fs::read_dir(config.configuation.machine_result_path.as_str()).unwrap();
 
     for file in files{
 
@@ -230,7 +230,7 @@ mod tests {
     use shared::drivers::elements::{ChrItem, HType};
 
     use crate::{Point, Element, create_hm};
-    use std::fs::{read_to_string};
+    use std::fs::read_to_string;
 
     #[test]
     fn test_ChrItem() {
