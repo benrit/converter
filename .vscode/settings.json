@@ -1,0 +1,4 @@
+{
+    "rust-analyzer.trace.extension": true,
+    "rust-analyzer.showUnlinkedFileNotification": false
+}

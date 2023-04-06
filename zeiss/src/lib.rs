@@ -7,6 +7,10 @@ use serde_json::{json, Value};
 use shared::drivers::config::{Config};
 use shared::drivers::elements::{ChrItem, HType};
 
+mod zeiss_test;
+
+
+
 enum ValueType {
     String,
     Float,
@@ -257,8 +261,8 @@ mod tests {
 
         let currentPath = env::current_dir().unwrap();
         let mut chrFile =  PathBuf::new();
-        chrFile.push(r"C:\Users\uqtsy\python\cmmTools\test_data\results\test_chr.txt");
-        
+        chrFile.push("C:\\Users\\uqtsy\\Rust\\cmmTools\\test_data\\results\\test_chr.txt");
+        println!("{chrFile:?}");
         
         let chr = read_to_string(chrFile).unwrap();
         let chrData:Vec<&str> = chr.split("\r\n").collect();
@@ -277,13 +281,13 @@ mod tests {
     fn test_hashmap() {
         let hm = create_hm("planid	partnb	id	type	idsymbol	actual	nominal	uppertol	lowertol	deviation	exceed	warningLimitCF	featureid	featuresigma	comment	link	linkmode	mmc	useruppertol	userlowertol	fftphi	fftphiunit	zoneroundnessangle	groupname	groupname2	datumAid	datumBid	datumCid	natuppertolid	natlowertolid	decimalplaces	featurePosX	featurePosY	featurePosZ	unit	group1	group2	group3	group4	group5	group6	group7	group8	group9	group10	");
         
-        let i =hm.into_iter().fold(0usize,|acc, x| acc.max(x.1));
+        let i = hm.into_iter().fold(0usize,|acc, x| acc.max(x.1));
 
         
         println!("{}", i);
 
-        // assert_eq!(*hm.get("id").unwrap(), 2);
-        // assert_eq!(*hm.get("end").unwrap_or(&0), 0);
+        // assert_eq!(hm.get("id").unwrap(), 2);
+        // assert_eq!(hm.get("end").unwrap_or(&0), 0);
     }
 
 
@@ -340,12 +344,10 @@ mod tests {
         m.insert("2".to_string(), json!(2.0));
         m.insert("3".to_string(), json!(3.0));
 
-        let v = vec!["3".to_string(), "2".to_string(), "1".to_string()];
+        let v = vec!["3".to_string(), "2".to_string()];
         let o = OrderedMap::new(&m, &v);
         
         println!("{}", serde_json::to_string(&o).unwrap())
 
     }
-
-
 }

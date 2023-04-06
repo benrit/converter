@@ -6,8 +6,15 @@ use crate::drivers::config;
 use std::collections::HashMap;
 
 
-fn read_chr_file(filename: &Path) -> Option<Value> {
+struct Chr_Item {
+    id: String,
+    id_type: String
+}
+
+
+fn read_chr_file(filename: &Path, item_list: Vec<&str>) -> Option<Value> {
     let file = fs::read_to_string(filename).unwrap();
+
     let data: Vec<&str> = file.split("\r\n").collect();
     let header_str = data[0];
     let header_map = header_str.split("\t").enumerate().map(|f| (f.1, f.0));
@@ -47,7 +54,7 @@ fn read_chr_file(filename: &Path) -> Option<Value> {
     Some(json!(chr_data))
 }
 
-pub fn convert(config: &config::Config) {
+pub fn convert(config: &mut config::Config) {
 
     let files = fs::read_dir(config.configuation.machine_result_file.to_owned()).unwrap();
 
@@ -56,7 +63,7 @@ pub fn convert(config: &config::Config) {
         match file.unwrap().path().to_str().unwrap() {
             
             c if c.contains("chr") => { 
-                read_chr_file(Path::new(c));
+                config.chr_data = read_chr_file(Path::new(c));
             },
             c if c.contains("fet") => {
                     
@@ -65,12 +72,4 @@ pub fn convert(config: &config::Config) {
         }
     }
 
-    // let p = Path::new(r"c:\temp\results\test.txt");
-    
-    // match read_chr_file(p) {
-    //     Some(data) => {
-    //         print!("{}", data)
-    //     }
-    //     None => {}
-    // }
 }

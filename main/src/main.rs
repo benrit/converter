@@ -20,7 +20,7 @@ fn read_args(config: &mut Config){
 
     while let Some(item) = args_iter.next(){
         match item.as_str() {
-            "--partID" => {config.part_id = Some(args_iter.next().unwrap_or(&"".to_string()).to_string())}
+            "--partID" => {config.part_id = Some(args_iter.next().unwrap_or(&String::from("")).to_string())}
             _ => {}
         }
     }

@@ -7,7 +7,7 @@ serde = { version = "1.0", features = ["derive"] }
 serde_json = {version = "1.0.89", features = ["preserve_order"]}
 chrono = "0.4.23"
 shared = { path = "./shared" }
-
+zeiss = { path = "./zeiss" }
 
 [profile.release]
 opt-level = 3
