@@ -54,6 +54,12 @@ fn read_chr_file(filename: &Path, item_list: Vec<&str>) -> Option<Value> {
     Some(json!(chr_data))
 }
 
+fn read_table_file(filename: &Path): Vec<String>{
+    let file = read_to_string(filename).ok();
+
+
+}
+
 pub fn convert(config: &mut config::Config) {
 
     let files = fs::read_dir(config.configuation.machine_result_file.to_owned()).unwrap();
@@ -62,7 +68,7 @@ pub fn convert(config: &mut config::Config) {
 
         match file.unwrap().path().to_str().unwrap() {
             
-            c if c.contains("chr") => { 
+            c if c.contains("chr") { 
                 config.chr_data = read_chr_file(Path::new(c));
             },
             c if c.contains("fet") => {
