@@ -5,7 +5,7 @@ use std::path::Path;
 use std::collections::{HashMap, BTreeMap};
 use serde_json::{json, Value};
 use shared::drivers::config::{Config};
-use shared::drivers::elements::{ChrItem, HType};
+use shared::drivers::elements::{ChrItem, Point, HType};
 
 mod zeiss_test;
 
@@ -14,7 +14,8 @@ mod zeiss_test;
 enum ValueType {
     String,
     Float,
-    Array(usize)
+    Array(usize),
+    Seq
 }
 
 
@@ -32,7 +33,6 @@ trait Element {
         }
 
         let mut elem:HType = HType::new();
-
 
         for item in array{
             let index = *hm.get(item.1).unwrap();
@@ -55,6 +55,9 @@ trait Element {
                         };
                     }
                     elem.insert(item.0.to_string(), json!(arr.join(".")));
+                },
+                ValueType::Seq => {
+                    elem.insert(item.0.to_string(), json!(elem.len() + 1));
                 }
                 _ => {}
             }  
@@ -65,19 +68,24 @@ trait Element {
     fn from_str(input: &str, hm: &HashMap<&str, usize>)-> Option<HType>;
 }
 
-#[derive(Debug)]
-struct Point{
-    x: f64
-}
-
 
 impl Element for Point {
     fn from_str(input: &str, hm: &HashMap<&str, usize>) -> Option<HType> {
         Self::new(input, hm, [
+            ("id", "id", ValueType::String), 
             ("idType", "idsymbol", ValueType::String), 
             ("id", "id", ValueType::String), 
-            ("nom", "nominal", ValueType::Float), 
-            ("act", "actual", ValueType::Float)])
+            ("actx", "x", ValueType::Float), 
+            ("acty", "y", ValueType::Float), 
+            ("actz", "z", ValueType::Float), 
+            ("nomx", "x_nom", ValueType::Float), 
+            ("nomy", "y_nom", ValueType::Float), 
+            ("nomz", "z_nom", ValueType::Float), 
+            ("i", "nx", ValueType::Float), 
+            ("j", "ny", ValueType::Float), 
+            ("k", "nz", ValueType::Float)
+            ])
+
     }
 }
 
@@ -120,11 +128,33 @@ fn read_fet_file(filename: &Path) -> Option<Vec<HType>> {
         } ;
 
     }
-    // let mut fet_data: Vec<FetData> = Vec::new();
 
     None
 }
 
+
+fn read_fet_file_v2(filename: &Path)-> Option<Vec<HType>> {
+    let mut temp: Vec<HType> = Vec::new();
+
+    let fet = fs::read_to_string(filename).unwrap();
+    let fetData:Vec<&str> = fet.split("\r\n").collect();
+
+    let hm = create_hm(fetData[0]);
+
+    for line in &fetData[1..]{
+        let t:Vec<&str> = line.split("\t").collect();
+        let idType = t[*hm.get("idType")?];
+        match idType {
+            "SpacePoint" | "Point" => {
+                temp.push(Point::from_str(line, &hm)?)
+            },
+
+            _ => {}
+        }
+    }
+
+    Some(temp)
+}
 
 // Hashmap that contains the header row of the zeiss table file, since the order could change in case there are some custome fields in the table file
 fn create_hm(input: &str)->HashMap<&str, usize>{
@@ -190,9 +220,7 @@ fn read_chr_file_v2(filename: &Path) -> Option<Vec<HType>>{
             Some(t) => temp.push(t),
             None => {},
         };
-
     }
-
     Some(temp)
 }
 
@@ -207,9 +235,9 @@ pub fn convert(config: &mut Config) -> std::io::Result<()> {
             c if c.contains("chr") => { 
                 config.chr_data = read_chr_file_v2(Path::new(c));
             },
-            // c if c.contains("fet") => {
-            //     config.fet_data = read_fet_file(Path::new(c));
-            // }
+            c if c.contains("fet") => {
+                config.fet_data = read_fet_file_v2(Path::new(c));
+            }
             _=>{}
         }
     }

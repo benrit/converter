@@ -77,7 +77,7 @@ fn main() {
 
     match config.machine.machine_type.to_ascii_lowercase().as_str() {
         "zeiss" => {
-            let res = zeiss::convert(&mut config);
+            let _res = zeiss::convert(&mut config);
         },
         "werth" => {werth::convert(&mut config)},
 

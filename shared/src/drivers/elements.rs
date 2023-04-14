@@ -1,4 +1,4 @@
-#![allow(dead_code)]
+#![allow(dead_code, non_snake_case)]
 
 use std::collections::HashMap;
 
@@ -20,3 +20,18 @@ pub struct ChrItem{
     pub groups: String
 }
 
+#[derive(Deserialize, Serialize, Debug, PartialEq, Clone)]
+pub struct Point{
+    // pub seq: usize,
+    // pub id: String,
+    // pub idType: String,
+    // pub nomx: f64,
+    // pub nomy: f64,
+    // pub nomz: f64,
+    // pub actx: f64,
+    // pub acty: f64,
+    // pub actz: f64,
+    // pub i: f64,
+    // pub j: f64,
+    // pub k: f64,
+}

@@ -32,7 +32,7 @@ pub struct Xml {
 mod tests{
     use std::fs::read_to_string;
     use toml::{self, value::Map};
-    use crate::config_test::{Config, Machine, Xml};
+    use crate::config_test::{Config, Machine};
 
     #[test]
     fn test_read_toml() -> std::io::Result<()>{
