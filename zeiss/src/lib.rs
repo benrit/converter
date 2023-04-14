@@ -125,6 +125,8 @@ fn read_fet_file(filename: &Path) -> Option<Vec<HType>> {
     None
 }
 
+
+// Hashmap that contains the header row of the zeiss table file, since the order could change in case there are some custome fields in the table file
 fn create_hm(input: &str)->HashMap<&str, usize>{
     let header_map = input.split("\t").enumerate().map(|f| (f.1, f.0));
     header_map.into_iter().collect()
@@ -137,9 +139,6 @@ fn read_chr_file(filename: &Path) -> Option<Vec<ChrItem>> {
     };
 
     let data: Vec<&str> = file.split("\r\n").collect();
-    // let header_str = data[0];
-    // let header_map = header_str.split("\t").enumerate().map(|f| (f.1, f.0));
-    // let hm: HashMap<&str, usize> = header_map.into_iter().collect();
 
     let hm = create_hm(data[0]);
 
@@ -197,9 +196,9 @@ fn read_chr_file_v2(filename: &Path) -> Option<Vec<HType>>{
     Some(temp)
 }
 
-pub fn convert(config: &mut Config) {
+pub fn convert(config: &mut Config) -> std::io::Result<()> {
 
-    let files = fs::read_dir(config.configuation.machine_result_path.as_str()).unwrap();
+    let files = fs::read_dir(config.configuation.machine_result_path.as_str())?;
 
     for file in files{
 
@@ -217,6 +216,7 @@ pub fn convert(config: &mut Config) {
 
     let _scan_data = config.dialog_data.as_ref().unwrap().Setup.importScan;
 
+    Ok(())
 }
 
 

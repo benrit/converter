@@ -6,8 +6,17 @@ controllertyp="C32BIT"
 dmeswi="Calypso"
 dmeid="CONT_G2"
 
-[configuation]
-machine_result_path=".\\test_data\\results"
-cmm_result_path=".\\test_data"
+
+[[export]]
+type="xml"
 xml_result_path="O:\\Measurement\\results"
-database = { uri="hello", target="123"}
+
+[[export]]
+type="cmm"
+cmm_result_path=".\\test_data"
+
+[[export]]
+type="mongodb"
+uri="mongodb:\\urlToMongodb"
+database="cmmData"
+collection="results"

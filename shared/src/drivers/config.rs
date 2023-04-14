@@ -100,6 +100,11 @@ pub struct Actions{
     pub pipeline: Option<Array>
 }
 
+#[derive(Deserialize, Serialize, Debug, PartialEq, Clone)]
+pub struct Export {
+    #[serde(alias="type")]
+    ty: String
+}
 
 #[derive(Deserialize, Serialize, Debug, PartialEq, Clone)]
 pub struct Config{

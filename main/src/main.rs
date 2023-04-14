@@ -12,6 +12,7 @@ use zeiss;
 use werth;
 
 use toml;
+mod config_test;
 
 
 fn read_args(config: &mut Config){
@@ -75,10 +76,17 @@ fn main() {
     }
 
     match config.machine.machine_type.to_ascii_lowercase().as_str() {
-        "zeiss" => {zeiss::convert(&mut config)},
+        "zeiss" => {
+            let res = zeiss::convert(&mut config);
+        },
         "werth" => {werth::convert(&mut config)},
 
-        _=> {println!("invalid machine type")}
+        _=> {
+            println!("invalid machine type");
+            println!("implemented machine types are:");
+            println!("\tzeiss");
+            println!("\twerth");
+        }
     }
 
     let current_counter = match config.dialog_data.as_ref() {
