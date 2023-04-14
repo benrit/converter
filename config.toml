@@ -6,6 +6,8 @@ controllertyp="C32BIT"
 dmeswi="Calypso"
 dmeid="CONT_G2"
 
+[configuation]
+table_file_path=""
 
 [[export]]
 type="xml"

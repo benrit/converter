@@ -53,6 +53,8 @@ table_file_path=""
 
 
 ## Example
+this will read zeiss table files and export it to xml, cmm file and insert an item it into a mongoDB database
+
 ``` toml
 [machine]
 type="zeiss"
@@ -78,3 +80,4 @@ database="cmmData"
 collection="results"
 
 ```
+
