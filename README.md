@@ -1,3 +1,8 @@
+# CMM Converter
+
+this is a converter that takes the result from different cmms and converts it in to a commen format that is easier to work with in other system like Python or Rust.
+
+
 # config.toml
 
 ## Section \[machine\] 
